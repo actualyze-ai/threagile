@@ -14,7 +14,7 @@ RUN git clone https://github.com/threagile/threagile.git
 ######
 ## Stage 2: Build application with Go's build tools
 ######
-FROM golang AS build
+FROM golang:1.25.6 AS build
 WORKDIR /app
 
 ENV GO111MODULE=on
