@@ -95,10 +95,27 @@ jobs:
           ./bin/threagile --help
           ./bin/risk_demo --get-info
 
+  govulncheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: 'go.mod'
+
+      - name: Install govulncheck
+        # Use @latest to ensure freshest vulnerability database
+        run: go install golang.org/x/vuln/cmd/govulncheck@latest
+
+      - name: Run govulncheck
+        run: govulncheck ./...
+
   all-jobs:
     name: CI / All Jobs
     runs-on: ubuntu-latest
-    needs: [lint, test, build]
+    needs: [lint, test, build, govulncheck]
     if: always()
     steps:
       - name: Check all jobs passed
@@ -106,10 +123,12 @@ jobs:
           LINT_RESULT: ${{ needs.lint.result }}
           TEST_RESULT: ${{ needs.test.result }}
           BUILD_RESULT: ${{ needs.build.result }}
+          GOVULNCHECK_RESULT: ${{ needs.govulncheck.result }}
         run: |
           if [[ "$LINT_RESULT" != "success" ]] || \
              [[ "$TEST_RESULT" != "success" ]] || \
-             [[ "$BUILD_RESULT" != "success" ]]; then
+             [[ "$BUILD_RESULT" != "success" ]] || \
+             [[ "$GOVULNCHECK_RESULT" != "success" ]]; then
             echo "One or more jobs failed"
             exit 1
           fi
