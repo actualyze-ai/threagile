@@ -9,16 +9,27 @@ on:
   schedule:
     - cron: '0 0 1 * *'
 
+permissions:
+  contents: read
+
 jobs:
   analyze:
     name: GoSec
     runs-on: ubuntu-latest
     env:
       GO111MODULE: on
+      GOSEC_VERSION: v2.22.11
     steps:
       - name: Checkout Source
         uses: actions/checkout@v4
-      - name: Run Gosec
-        uses: securego/gosec@master
+
+      - name: Set up Go
+        uses: actions/setup-go@v6
         with:
-          args: ./...
+          go-version-file: 'go.mod'
+
+      - name: Install Gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@${{ env.GOSEC_VERSION }}
+
+      - name: Run Gosec
+        run: gosec ./...
