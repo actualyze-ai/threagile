@@ -40,7 +40,7 @@ jobs:
           load: true
 
       - name: Scan image
-        uses: anchore/scan-action@v3
+        uses: anchore/scan-action@v7
         with:
           image: "localbuild/threagile:latest"
           fail-build: false
