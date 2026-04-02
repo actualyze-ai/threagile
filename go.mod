@@ -47,7 +47,7 @@ require (
 )
 
 require (
-	github.com/akedrou/textdiff v0.0.0-20230423230343-2ebdcebdccc1
+	github.com/akedrou/textdiff v0.1.0
 	github.com/blend/go-sdk v1.20220411.3 // indirect
 	github.com/bytedance/sonic v1.15.0 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.12 // indirect
