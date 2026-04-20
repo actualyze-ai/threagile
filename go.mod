@@ -7,7 +7,7 @@ require (
 	github.com/gin-gonic/gin v1.12.0
 	github.com/google/uuid v1.6.0
 	github.com/jung-kurt/gofpdf v1.16.2
-	github.com/mattn/go-shellwords v1.0.12
+	github.com/mattn/go-shellwords v1.0.13
 	github.com/mpvl/unique v0.0.0-20150818121801-cbe035fff7de
 	github.com/shopspring/decimal v1.4.0
 	github.com/wcharczuk/go-chart v2.0.1+incompatible
